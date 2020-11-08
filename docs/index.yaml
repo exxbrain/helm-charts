@@ -16,6 +16,6 @@ entries:
     name: keycloak-chart
     type: application
     urls:
-    - https://exxbrain.github.io/helm-charts/keycloak-chart-0.1.0.tgz
+    - https://exxbrain.github.io/helm-charts/keycloak/keycloak-chart-0.1.0.tgz
     version: 0.1.0
 generated: "2020-11-08T17:50:39.773307+03:00"
