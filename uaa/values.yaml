@@ -1,0 +1,26 @@
+replicaCount: 2
+
+ingress:
+  enabled: true
+
+metrics:
+  serviceMonitor:
+    enabled: true
+
+image: exxbrain/architecture
+
+service:
+  type: NodePort
+  port: 8000
+  basePath: /otusapp/dzakharov
+  host: arch.homework
+
+postgresql:
+  enabled: true
+  fullnameOverride: postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: 12345
+  postgresqlDatabase: postgres
+  postgresqlHost: postgres
+  service:
+    port: 5432
