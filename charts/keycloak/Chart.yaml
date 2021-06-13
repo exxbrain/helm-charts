@@ -8,12 +8,14 @@ appVersion: 1.16.0
 dependencies:
   - name: postgresql
     version: 9.x.x
+    # repository: https://charts.bitnami.com/bitnami
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
     tags:
       - database
   - name: keycloak
     version: 11.x.x
-    repository: https://codecentric.github.io/helm-charts
+    # repository: https://codecentric.github.io/helm-charts
+    repository: file://charts/keycloak
     tags:
       - keycloak

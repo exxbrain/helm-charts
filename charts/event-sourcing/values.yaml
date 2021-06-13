@@ -1,0 +1,45 @@
+keycloak:
+  fullnameOverride: keycloak
+  postgresql:
+    enabled: false
+  keycloak:
+    ingress:
+      enabled: true
+      rules:
+        - host: arch.homework
+          paths:
+            - /otusapp/dzakharov/auth
+    contextPath: otusapp/dzakharov/auth
+    db:
+      vendor: postgres
+      host: postgres
+      port: "5432"
+      database: keycloak
+      user: postgres
+      password: "12345"
+    admin:
+      username: adm
+      password: adm
+
+gateway:
+  fullnameOverride: gateway
+  authUrl: http://keycloak-http/otusapp/dzakharov/auth
+  issuerUrl: http://arch.homework/otusapp/dzakharov
+  image:
+    name: exxbrain/otus-gateway:0.1.11
+
+order-service:
+  image:
+    name: exxbrain/otus-order-service:0.1.13
+  authUrl: http://keycloak-http/otusapp/dzakharov/auth
+  issuerUrl: http://arch.homework/otusapp/dzakharov
+  dbUrl: jdbc:postgresql://postgres:5432/order_service?user=postgres&password=12345
+
+postgresql:
+  fullnameOverride: postgres
+  postgresqlUsername: postgres
+  postgresqlPassword: "12345"
+  postgresqlDatabase: postgres
+  postgresqlHost: postgres
+  service:
+    port: 5432

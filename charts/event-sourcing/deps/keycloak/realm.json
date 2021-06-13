@@ -1,0 +1,84 @@
+{
+  "id": "arch",
+  "realm": "arch",
+  "registrationAllowed": true,
+  "sslRequired": "none",
+  "enabled": true,
+  "attributes": {
+    "frontendUrl": "http://arch.homework/otusapp/dzakharov"
+  },
+  "eventsListeners": [
+    "jboss-logging"
+  ],
+  "clients": [
+    {
+      "clientId": "gateway",
+      "enabled": true,
+      "publicClient": true,
+      "fullScopeAllowed": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "uma_authorization",
+        "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "arch",
+        "attributes": {}
+      },
+      {
+        "name": "admin",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "arch",
+        "attributes": {}
+      },
+      {
+        "name": "user",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "arch",
+        "attributes": {}
+      },
+      {
+        "name": "offline_access",
+        "description": "${role_offline-access}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "arch",
+        "attributes": {}
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "admin",
+      "path": "/admin",
+      "attributes": {},
+      "realmRoles": [
+        "admin"
+      ],
+      "clientRoles": {},
+      "subGroups": []
+    },
+    {
+      "name": "user",
+      "path": "/user",
+      "attributes": {},
+      "realmRoles": [
+        "user"
+      ],
+      "clientRoles": {},
+      "subGroups": []
+    }
+  ]
+}

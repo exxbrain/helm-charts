@@ -1,0 +1,18 @@
+apiVersion: v2
+appVersion: 1.16.0
+dependencies:
+- condition: postgresql.enabled
+  name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - database
+  version: 9.x.x
+- name: keycloak
+  repository: https://codecentric.github.io/helm-charts
+  tags:
+  - keycloak
+  version: 11.x.x
+description: A Helm chart for Kubernetes
+name: keycloak
+type: application
+version: 0.1.2

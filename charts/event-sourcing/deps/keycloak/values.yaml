@@ -1,0 +1,118 @@
+keycloak:
+
+  fullnameOverride: keycloak
+
+  replicas: 1
+
+  cli:
+    custom:
+
+
+  ingress:
+    enabled: true
+    rules:
+    - host: arch.homework
+      paths:
+      - /otusapp/dzakharov/auth
+    tls: []
+
+  postgresql:
+    enabled: false
+
+  serviceMonitor:
+    enabled: true
+
+  db:
+    vendor: postgres
+    host: postgres
+    port: "5432"
+    database: keycloak
+    user: postgres
+    password: "12345"
+
+  admin:
+    username: adm
+    password: adm
+
+  extraVolumes: |
+    - name: realm-configmap
+      configMap:
+        name: realm-configmap
+
+  extraVolumeMounts: |
+    - name: realm-configmap
+      mountPath: "/realm/"
+      readOnly: true
+
+  extraEnv: |
+    - name: DB_VENDOR
+      value: {{.Values.db.vendor}}
+    - name: DB_ADDR
+      value: {{.Values.db.host}}
+    - name: DB_PORT
+      value: "{{.Values.db.port}}"
+    - name: DB_DATABASE
+      value: {{.Values.db.database}}
+    - name: DB_USER
+      value: {{.Values.db.user}}
+    - name: DB_PASSWORD
+      value: "{{.Values.db.password}}"
+    - name: KEYCLOAK_USER
+      value: {{.Values.admin.username}}
+    - name: KEYCLOAK_PASSWORD
+      value: {{.Values.admin.password}}
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+    - name: KEYCLOAK_IMPORT
+      value: /realm/realm.json
+
+  contextPath: otusapp/dzakharov/auth
+
+  startupScripts:
+    # cli script that reconfigures WildFly
+    contextPath.cli: |
+      embed-server --server-config=standalone-ha.xml --std-out=echo
+      batch
+      {{- if ne .Values.contextPath "auth" }}
+      /subsystem=keycloak-server/:write-attribute(name=web-context,value={{ if eq .Values.contextPath "" }}/{{ else }}{{ .Values.contextPath }}{{ end }})
+      {{- if eq .Values.contextPath "" }}
+      /subsystem=undertow/server=default-server/host=default-host:write-attribute(name=default-web-module,value=keycloak-server.war)
+      {{- end }}
+      {{- end }}
+      run-batch
+      stop-embedded-server
+
+  livenessProbe: |
+    httpGet:
+      path: {{ if ne .Values.contextPath "" }}/{{ .Values.contextPath }}{{ end }}/
+      port: http
+    initialDelaySeconds: 0
+    timeoutSeconds: 5
+
+  readinessProbe: |
+    httpGet:
+      path: {{ if ne .Values.contextPath "" }}/{{ .Values.contextPath }}{{ end }}/realms/master
+      port: http
+    initialDelaySeconds: 30
+    timeoutSeconds: 1
+
+  startupProbe: |
+    httpGet:
+      path: {{ if ne .Values.contextPath "" }}/{{ .Values.contextPath }}{{ end }}/
+      port: http
+    initialDelaySeconds: 30
+    timeoutSeconds: 1
+    failureThreshold: 60
+    periodSeconds: 5
+
+postgresql:
+  fullnameOverride: postgres
+  enabled: true
+  postgresqlUsername: postgres
+  postgresqlPassword: "12345"
+  postgresqlDatabase: postgres
+  postgresqlAppDatabase: keycloak
+  persistence:
+    size: 1Gi
+  service:
+    port: "5432"

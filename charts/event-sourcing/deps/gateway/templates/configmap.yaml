@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: routes-configmap
+data:
+  routes.yaml: |-
+{{ .Files.Get "routes.yaml" | indent 4 }}
