@@ -25,13 +25,15 @@ appVersion: 1.16.0
 dependencies:
   - name: postgresql
     version: 9.x.x
-    repository: https://charts.bitnami.com/bitnami
+    # repository: https://charts.bitnami.com/bitnami
+    repository: file://deps/postgresql
     condition: postgresql.enabled
     tags:
       - uaa-database
   - name: prometheus-postgres-exporter
     version: 2.x.x
-    repository: https://prometheus-community.github.io/helm-charts
+    # repository: https://prometheus-community.github.io/helm-charts
+    repository: file://deps/prometheus-postgres-exporter
     condition: prometheus-postgres-exporter.enabled
     tags:
       - database-monitoring

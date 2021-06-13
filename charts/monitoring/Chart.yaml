@@ -8,7 +8,8 @@ appVersion: 1.16.0
 dependencies:
   - name: loki-stack
     version: 2.x.x
-    repository: https://grafana.github.io/helm-charts
+    # repository: https://grafana.github.io/helm-charts
+    repository: file//deps/loki-stack
     tags:
       - loki
 #  - name: kube-prometheus-stack
