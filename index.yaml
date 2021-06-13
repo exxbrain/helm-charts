@@ -1,6 +1,123 @@
 apiVersion: v1
 entries:
+  event-sourcing:
+  - apiVersion: v2
+    created: "2021-06-13T14:09:25.053638073Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: file://deps/postgresql
+      tags:
+      - database
+      version: 9.x.x
+    - name: gateway
+      repository: file://deps/gateway
+      tags:
+      - gateway
+      version: 0.x.x
+    - name: keycloak
+      repository: file://deps/keycloak
+      tags:
+      - auth-server
+      version: 0.x.x
+    - name: order-service
+      repository: file://deps/order-service
+      tags:
+      - order-service
+      version: 0.x.x
+    description: Eve
+    digest: 402d5d2016461b0ad0d45219495f0eb83117ab14e9d5048391fd1b2e9cc8677f
+    name: event-sourcing
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/event-sourcing-0.1.0/event-sourcing-0.1.0.tgz
+    version: 0.1.0
+  gateway:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-13T14:09:25.180134757Z"
+    description: A Helm chart for Kubernetes
+    digest: e7b79e2a09d4c0de67f428c8d4021f0795a9297322d54870059fbf0220942d64
+    name: gateway
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/gateway-0.1.1/gateway-0.1.1.tgz
+    version: 0.1.1
+  keycloak:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-13T14:09:25.329791938Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: file://deps/postgresql
+      tags:
+      - database
+      version: 9.x.x
+    - name: keycloak
+      repository: file://deps/keycloak
+      tags:
+      - keycloak
+      version: 11.x.x
+    description: A Helm chart for Kubernetes
+    digest: 9caf32125504f3695bbf1b04f93f93537cb2ddb806cf1f13098035bb831245ec
+    name: keycloak
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/keycloak-0.1.2/keycloak-0.1.2.tgz
+    version: 0.1.2
+  loki:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-13T14:09:25.481667418Z"
+    dependencies:
+    - name: loki-stack
+      repository: file://deps/loki-stack
+      tags:
+      - loki
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 934e658f336054db0d8e1c31df4acc8340b80f6670e0387b3fc85006d532b6d3
+    name: loki
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/loki-0.1.3/loki-0.1.3.tgz
+    version: 0.1.3
+  order-service:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-13T14:09:25.610430102Z"
+    description: A Helm chart for Kubernetes
+    digest: 945f50e6b55f251e60487667b396d876b8c081b5010ac380cd57d4e9f3fa57e7
+    name: order-service
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/order-service-0.1.0/order-service-0.1.0.tgz
+    version: 0.1.0
   uaa:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-06-13T14:09:25.77627318Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: file://deps/postgresql
+      tags:
+      - uaa-database
+      version: 9.x.x
+    - condition: prometheus-postgres-exporter.enabled
+      name: prometheus-postgres-exporter
+      repository: file://deps/prometheus-postgres-exporter
+      tags:
+      - database-monitoring
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 165454f56590454528a4e8d360c89fb161cd0d0441aff6619d0e8cb074c9c084
+    name: uaa
+    type: application
+    urls:
+    - https://github.com/exxbrain/helm-charts/releases/download/uaa-0.1.4/uaa-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2021-05-31T12:08:07.707151641Z"
@@ -11,4 +128,4 @@ entries:
     urls:
     - https://github.com/exxbrain/helm-charts/releases/download/uaa-0.1.1/uaa-0.1.1.tgz
     version: 0.1.1
-generated: "2021-05-31T12:08:07.707156841Z"
+generated: "2021-06-13T14:09:25.77628098Z"
