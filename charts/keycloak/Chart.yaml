@@ -9,13 +9,13 @@ dependencies:
   - name: postgresql
     version: 9.x.x
     # repository: https://charts.bitnami.com/bitnami
-    repository: https://charts.bitnami.com/bitnami
+    repository: file://deps/postgresql
     condition: postgresql.enabled
     tags:
       - database
   - name: keycloak
     version: 11.x.x
     # repository: https://codecentric.github.io/helm-charts
-    repository: file://charts/keycloak
+    repository: file://deps/keycloak
     tags:
       - keycloak
