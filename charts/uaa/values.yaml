@@ -1,26 +1,51 @@
-replicaCount: 2
+fullnameOverride: uaa
+
+replicaCount: 1
 
 ingress:
   enabled: true
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: http://arch.homework
+    nginx.ingress.kubernetes.io/proxy-redirect-to: /otus/dzakharov/auth
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: arch.homework
+      paths:
+        # - /otus/dzakharov/auth
+        - /otus/dzakharov/auth($|/)(.*)
+        # - /otus/dzakharov/auth
 
-metrics:
-  serviceMonitor:
-    enabled: true
+postgresql:
+  fullnameOverride: postgres
+  enabled: true
+  postgresqlUsername: postgres
+  postgresqlPassword: "12345"
+  postgresqlDatabase: postgres
+  postgresqlAppDatabase: uaa
+  persistence:
+    size: 1Gi
+  service:
+    port: "5432"
 
-image: exxbrain/architecture
+image:
+  name: cloudfoundry/uaa:75.2.0
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+
 
 service:
   type: NodePort
-  port: 8000
-  basePath: /otusapp/dzakharov
-  host: arch.homework
+  port: 8080
+#  basePath: /otusapp/dzakharov
+#  host: arch.homework
 
-postgresql:
-  enabled: true
-  fullnameOverride: postgres
-  postgresqlUsername: postgres
-  postgresqlPassword: 12345
-  postgresqlDatabase: postgres
-  postgresqlHost: postgres
-  service:
-    port: 5432
+prometheus-postgres-exporter:
+  enabled: false
+  config:
+    datasource:
+      host: postgres
+      user: postgres
+      password: "12345"
+
+

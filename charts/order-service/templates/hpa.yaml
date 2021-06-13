@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "uaa.fullname" . }}
+  name: {{ include "order-service.fullname" . }}
   labels:
-    {{- include "uaa.labels" . | nindent 4 }}
+    {{- include "order-service.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "uaa.fullname" . }}
+    name: {{ include "order-service.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
